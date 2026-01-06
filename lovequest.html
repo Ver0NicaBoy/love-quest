@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); /* เปลี่ยนพื้นหลังให้เข้มขึ้นเพื่อให้พลุสวย */
+            color: white; /* เปลี่ยนสีตัวอักษรหลักเป็นขาว */
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* ปรับสีกล่องข้อความให้อ่อนลงเล็กน้อยเพื่อให้เข้ากับธีมมืด */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333; /* ตัวอักษรในกล่องสีดำ */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            transition: 0.3s;
+            z-index: 10; /* อยู่เหนือพลุ */
+        }
+
+        h1 { color: #ff4757; margin-bottom: 10px; }
+        p { color: #555; font-size: 1.1rem; }
+
+        input {
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            width: 80%;
+            font-size: 1rem;
+            margin-top: 15px;
+            outline: none;
+            text-align: center;
+        }
+        
+        input:focus { border-color: #ff4757; }
+
+        .btn {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+            display: inline-block;
+        }
+
+        .btn:hover { transform: scale(1.05); }
+
+        .btn-gray {
+            background-color: #747d8c;
+            box-shadow: 0 5px 15px rgba(116, 125, 140, 0.3);
+        }
+
+        .runaway-style {
+            position: fixed;
+            z-index: 100;
+        }
+
+        .hidden { display: none !important; }
+
+        .photo-frame {
+            margin-top: 20px;
+            padding: 10px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transform: rotate(-3deg);
+            animation: float 3s ease-in-out infinite;
+        }
+        .photo-frame img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(-3deg); }
+            50% { transform: translateY(-10px) rotate(-3deg); }
+            100% { transform: translateY(0px) rotate(-3deg); }
+        }
+
+        .heart-beat { animation: beat 0.5s infinite alternate; }
+        @keyframes beat { to { transform: scale(1.1); } }
+
+        /* =========================================
+           STYLE พลุหัวใจ
+           ========================================= */
+        .firework-particle {
+            position: fixed;
+            pointer-events: none;
+            animation: explode 1s ease-out forwards;
+            z-index: 1; /* อยู่หลังกล่องข้อความ */
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================
+           Pop-up Modal
+           ========================================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-card h2 { color: #ff4757; margin-top: 0; font-size: 1.5rem; }
+        .modal-card p { font-size: 1rem; color: #555; }
+        .modal-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 15px;
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="customModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h2 id="modalTitle">เดี๋ยวก่อน!</h2>
+            <p id="modalText">ข้อความแจ้งเตือน</p>
+            <button class="modal-btn" onclick="closeModal()">โอเค</button>
+        </div>
+    </div>
+
+    <div id="page1" class="container">
+        <h1>🔒 Locked Heart</h1>
+        <p>กรุณากรอกรหัสผ่านเพื่อเข้าสู่หัวใจ</p>
+        <p style="font-size: 0.8rem; color: #888;">(ใบ้: วันครบรอบของเรา วว/ดด)</p>
+        
+        <input type="text" id="dateInput" placeholder="เช่น 25/10">
+        <br>
+        <button class="btn" onclick="checkDate()">ปลดล็อค</button>
+    </div>
+
+    <div id="page2" class="container hidden">
+        <h1 id="questionText">รักเค้าไหม? ❤️</h1>
+        <p id="subText">ตอบมาตามตรงนะ...</p>
+        
+        <div style="height: 200px; display: flex; justify-content: center; align-items: center; gap: 20px;">
+            <button id="loveBtn" class="btn" onmouseover="moveLoveButton()">รักที่สุด!</button>
+            <button id="noBtn" class="btn btn-gray" onclick="handleNoClick()">ไม่รัก</button>
+        </div>
+    </div>
+
+    <div id="page3" class="container hidden">
+        <h1>Happy Anniversary! 🎉</h1>
+        <p>เย้! ในที่สุดก็ยอมรับนะ 😆</p>
+        <p>ขอบคุณที่เป็นแฟนที่ดีเสมอมานะ<br>รักเธอมากๆ นะครับ ❤️</p>
+        
+        <div class="photo-frame">
+            <img src="downloadหฟหฟ.jpg" alt="Our Photo">
+        </div>
+    </div>
+
+    <script>
+        const correctDate = "11/11"; 
+        
+
+        let noClickCount = 0;
+
+        function checkDate() {
+            const input = document.getElementById('dateInput').value;
+            if(input === correctDate) {
+                document.getElementById('page1').classList.add('hidden');
+                document.getElementById('page2').classList.remove('hidden');
+                document.body.style.background = "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)";
+            } else {
+                showModal("ผิดจ้า!", "จำวันครบรอบไม่ได้หรอ? 😤 ลองใหม่!");
+                document.getElementById('dateInput').value = '';
+            }
+        }
+
+        function moveLoveButton() {
+            const btn = document.getElementById('loveBtn');
+            if (!btn.classList.contains('runaway-style')) {
+                btn.classList.add('runaway-style');
+            }
+            const maxWidth = window.innerWidth - btn.offsetWidth;
+            const maxHeight = window.innerHeight - btn.offsetHeight;
+            btn.style.left = (Math.random() * maxWidth) + 'px';
+            btn.style.top = (Math.random() * maxHeight) + 'px';
+        }
+
+        function handleNoClick() {
+            noClickCount++;
+            if (noClickCount === 1) showModal("เดี๋ยวนะ!", "แน่ใจหรอ? คิดดีๆ นะ! 🤨");
+            else if (noClickCount === 2) showModal("ฮัลโหล?", "ไม่รักเค้าจริงดิ? เสียใจนะเนี่ย 😢");
+            else if (noClickCount === 3) showModal("ขอร้อง...", "ให้โอกาสตอบอีกที... 🥺");
+            else if (noClickCount === 4) showModal("โห...", "ใจร้ายจัง งั้นเจอไม้นี้!");
+        }
+
+        function showModal(title, text) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.add('hidden');
+            if (noClickCount === 4) transformToHeart();
+        }
+
+        function transformToHeart() {
+            const noBtn = document.getElementById('noBtn');
+            const loveBtn = document.getElementById('loveBtn');
+            loveBtn.style.display = 'none';
+
+            noBtn.innerText = "สรุปก็รักใช่ม้า ❤️";
+            noBtn.classList.remove('btn-gray');
+            noBtn.style.backgroundColor = "#ff4757";
+            noBtn.style.transform = "scale(1.2)";
+            noBtn.classList.add('heart-beat');
+            noBtn.onclick = goToPage3;
+            
+            document.getElementById('questionText').innerText = "นั่นแน่~";
+            document.getElementById('subText').innerText = "กดปุ่มข้างล่างเลยสิ";
+        }
+
+        function goToPage3() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+            
+    
+            document.body.style.background = "radial-gradient(circle, #1a1a2e 0%, #000000 100%)";
+            
+            startFireworks();
+        }
+
+    
+        function startFireworks() {
+        
+            setInterval(() => {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * (window.innerHeight * 0.6); // ให้พลุแตกแถวๆ ครึ่งบนจอ
+                createFirework(x, y);
+            }, 700);
+        }
+
+        function createFirework(x, y) {
+            const particleCount = 30; 
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.innerText = '❤️'; 
+                particle.classList.add('firework-particle');
+                
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 150 + 50; 
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                
+                
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.setProperty('--ty', ty + 'px');
+                
+                // สุ่มขนาดหัวใจ
+                const size = Math.random() * 20 + 10;
+                particle.style.fontSize = size + 'px';
+
+                
+
+                document.body.appendChild(particle);
+
+                
+                setTimeout(() => particle.remove(), 1000); 
+            }
+        }
+    </script>
+</body>
+</html>
